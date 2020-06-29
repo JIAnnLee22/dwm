@@ -281,7 +281,7 @@ static const char autostartsh[] = "autostart.sh";
 static Systray *systray =  NULL;
 static const char broken[] = "broken";
 static const char dwmdir[] = "dwm";
-static const char localshare[] = ".local/share";
+static const char scripts[] = "scripts";
 static char stext[256];
 static int screen;
 static int sw, sh;           /* X display screen geometry width, height */
@@ -1659,10 +1659,10 @@ runautostart(void)
 		}
 	} else {
 		/* space for path segments, separators and nul */
-		pathpfx = ecalloc(1, strlen(home) + strlen(localshare)
-		                     + strlen(dwmdir) + 3);
+		pathpfx = ecalloc(1, strlen(home) + strlen(dwmdir)
+		                     + strlen(scripts) + 3);
 
-		if (sprintf(pathpfx, "%s/%s/%s", home, localshare, dwmdir) < 0) {
+		if (sprintf(pathpfx, "%s/%s/%s", home, dwmdir, scripts) < 0) {
 			free(pathpfx);
 			return;
 		}

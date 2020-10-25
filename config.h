@@ -39,6 +39,7 @@ static const Rule rules[] = {
 	/* class              instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",             NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",          NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Android-studio",   NULL,       NULL,       1 << 8,       1,           -1 },
 };
 
 /* layout(s) */
@@ -73,6 +74,9 @@ static const char *lightupcmd[]  = { "/home/jiannlee22/dwm/scripts/light-up.sh",
 static const char *lightdowncmd[]  = { "/home/jiannlee22/dwm/scripts/light-down.sh", NULL };
 static const char *volupcmd[]  = { "/home/jiannlee22/dwm/scripts/volup.sh", NULL };
 static const char *voldowncmd[]  = { "/home/jiannlee22/dwm/scripts/voldown.sh", NULL };
+static const char *bgchangecmd[]  = { "/home/jiannlee22/dwm/scripts/bg-change.sh", NULL };
+static const char *qwertycmd[]  = { "/home/jiannlee22/dwm/scripts/qwerty.sh", NULL };
+static const char *colemakcmd[]  = { "/home/jiannlee22/dwm/scripts/colemak.sh", NULL };
 
 static Key keys[] = {
 	/* modifier         key                        function        argument */
@@ -83,6 +87,9 @@ static Key keys[] = {
 	{ MODKEY,           XK_d,                      spawn,          {.v = dmenucmd } },
 	{ MODKEY,	    XK_Return,                 spawn,          {.v = termcmd } },
 	{ MODKEY,	    XK_w,                      spawn,          {.v = browsercmd } },
+	{ MODKEY,	    XK_b,                      spawn,          {.v = bgchangecmd } },
+	{ MODKEY,	    XK_c,                      spawn,          {.v = colemakcmd } },
+	{ MODKEY,	    XK_v,                      spawn,          {.v = qwertycmd } },
 	{ MODKEY,           XK_f,                      togglebar,      {0} },
 	{ MODKEY|ShiftMask, XK_j,                      incnmaster,     {.i = +1 } },
 	{ MODKEY|ShiftMask, XK_k,                      incnmaster,     {.i = -1 } },

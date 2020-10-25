@@ -1,6 +1,6 @@
 #!/bin/bash
 
-bash ~/dwm/scripts/status-bar.sh  &
+bash ~/dwm/scripts/status.sh  &
 bash ~/dwm/scripts/tap-to-click.sh  &
 bash ~/dwm/scripts/bg-change.sh &
 libinput-gestures-setup start &

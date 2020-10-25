@@ -41,6 +41,6 @@ D=$(date +"%F %R" )
 
 
 while true; do
-  xsetroot -name "💿${R}M [$S] $D"
+  xsetroot -name "[MAM${R}M][$S]$D"
 	sleep 2
 done

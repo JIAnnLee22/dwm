@@ -28,6 +28,22 @@ static const char *colors[][3]      = {
 	[SchemeHid]  = { col_cyan,  col_gray1, col_cyan  },
 };
 
+typedef struct {
+  const char *name;
+  const void *cmd;
+ } Sp;
+ const char *spcmd1[] = {"st", "-n", "spterm",      "-g", "80x24", NULL };
+ const char *spcmd2[] = {"st", "-n", "spfm",        "-g", "80x24", "-e", "ranger", NULL };
+ const char *spcmd3[] = {"st", "-n", "spmusicbox",  "-g", "80x24", "-e", "musicbox", NULL  };
+ static Sp scratchpads[] = {
+  /* name          cmd  */
+  {"spterm",      spcmd1},
+  {"spranger",    spcmd2},
+  {"spmusicbox",  spcmd3},
+ };
+ 
+   
+
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
@@ -36,11 +52,15 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class              instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",             NULL,       NULL,       0,            1,           -1 },
-	{ "Telegram",             NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",          NULL,       NULL,       1 << 8,       0,           -1 },
-	{ "Android-studio",   NULL,       NULL,       1 << 8,       1,           -1 },
+	/* class              instance     title       tags mask     isfloating   monitor */
+	{ "Gimp",             NULL,        NULL,       0,            1,           -1 },
+	{ "Telegram",         NULL,        NULL,       0,            1,           -1 },
+	{ "Firefox",          NULL,        NULL,       1 << 8,       0,           -1 },
+	{ "Android-studio",   NULL,        NULL,       1 << 8,       1,           -1 },
+  { NULL,               "spterm",    NULL,       SPTAG(0),     1,           -1 },
+  { NULL,               "spfm",      NULL,       SPTAG(1),     1,           -1 },
+  { NULL,               "spmusicbox",NULL,       SPTAG(2),     1,           -1 },
+
 };
 
 /* layout(s) */
@@ -82,6 +102,7 @@ static const char *suspendcmd[]  = { "/home/jiannlee22/dwm/scripts/suspend.sh", 
 static const char *qwertycmd[]  = { "/home/jiannlee22/dwm/scripts/qwerty.sh", NULL };
 static const char *colemakcmd[]  = { "/home/jiannlee22/dwm/scripts/colemak.sh", NULL };
 
+
 static Key keys[] = {
 	/* modifier         key                        function        argument */
 	{ 0,                XF86XK_MonBrightnessUp,    spawn,          {.v = lightupcmd } },
@@ -90,7 +111,7 @@ static Key keys[] = {
 	{ 0,                XF86XK_AudioLowerVolume,   spawn,          {.v = voldowncmd } },
 	{ MODKEY,           XK_d,                      spawn,          {.v = dmenucmd } },
 	{ MODKEY,	          XK_Return,                 spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask, XK_Return,                 spawn,          {.v = scratchpadcmd } },
+	{ MODKEY|ShiftMask, XK_Return,                 togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,	          XK_w,                      spawn,          {.v = browsercmd } },
 	{ MODKEY,	          XK_b,                      spawn,          {.v = bgchangecmd } },
 	{ MODKEY,	          XK_c,                      spawn,          {.v = colemakcmd } },
@@ -123,6 +144,9 @@ static Key keys[] = {
 	{ MODKEY,           XK_minus,                  setgaps,        {.i = -1 } },
 	{ MODKEY,           XK_equal,                  setgaps,        {.i = +1 } },
 	{ MODKEY|ShiftMask, XK_equal,                  setgaps,        {.i = 0  } },
+  { MODKEY,           XK_t,                      togglescratch,  {.ui = 0 } },
+  { MODKEY,           XK_y,                      togglescratch,  {.ui = 1 } },
+  { MODKEY,           XK_u,                      togglescratch,  {.ui = 2 } },
 	TAGKEYS(            XK_1,                                      0)
 	TAGKEYS(            XK_2,                                      1)
 	TAGKEYS(            XK_3,                                      2)
@@ -146,7 +170,7 @@ static Button buttons[] = {
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+	{ ClkClientWin,         MODKEY,         Button1,        resizemouse,    {0} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },

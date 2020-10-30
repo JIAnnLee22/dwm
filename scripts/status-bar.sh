@@ -87,7 +87,7 @@ get_battery_charging_status() {
 
 
 print_bat(){
-	echo "$(get_battery_combined_percent)%, $(get_battery_charging_status) $(get_time_until_charged )";
+	echo "$(get_battery_charging_status) $(get_battery_combined_percent)%, $(get_time_until_charged )";
 }
 
 R=$(print_mem)
@@ -98,4 +98,4 @@ D=$(date +"%F %R" )
 
 
 
-xsetroot -name "[MAM ${R}M][$S][$B]$D"
+xsetroot -name "[💿${R}M][$S][$B]$D"

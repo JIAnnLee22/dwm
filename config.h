@@ -38,6 +38,7 @@ static const Rule rules[] = {
 	 */
 	/* class              instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",             NULL,       NULL,       0,            1,           -1 },
+	{ "Telegram",             NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",          NULL,       NULL,       1 << 8,       0,           -1 },
 	{ "Android-studio",   NULL,       NULL,       1 << 8,       1,           -1 },
 };
@@ -69,12 +70,15 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char scratchpadname[] = "scratchpad";
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "80x24", NULL };
 static const char *browsercmd[]  = { "/home/jiannlee22/dwm/scripts/browser.sh", NULL };
 static const char *lightupcmd[]  = { "/home/jiannlee22/dwm/scripts/light-up.sh", NULL };
 static const char *lightdowncmd[]  = { "/home/jiannlee22/dwm/scripts/light-down.sh", NULL };
 static const char *volupcmd[]  = { "/home/jiannlee22/dwm/scripts/volup.sh", NULL };
 static const char *voldowncmd[]  = { "/home/jiannlee22/dwm/scripts/voldown.sh", NULL };
 static const char *bgchangecmd[]  = { "/home/jiannlee22/dwm/scripts/bg-change.sh", NULL };
+static const char *suspendcmd[]  = { "/home/jiannlee22/dwm/scripts/suspend.sh", NULL };
 static const char *qwertycmd[]  = { "/home/jiannlee22/dwm/scripts/qwerty.sh", NULL };
 static const char *colemakcmd[]  = { "/home/jiannlee22/dwm/scripts/colemak.sh", NULL };
 
@@ -85,11 +89,12 @@ static Key keys[] = {
 	{ 0,                XF86XK_AudioRaiseVolume,   spawn,          {.v = volupcmd } },
 	{ 0,                XF86XK_AudioLowerVolume,   spawn,          {.v = voldowncmd } },
 	{ MODKEY,           XK_d,                      spawn,          {.v = dmenucmd } },
-	{ MODKEY,	    XK_Return,                 spawn,          {.v = termcmd } },
-	{ MODKEY,	    XK_w,                      spawn,          {.v = browsercmd } },
-	{ MODKEY,	    XK_b,                      spawn,          {.v = bgchangecmd } },
-	{ MODKEY,	    XK_c,                      spawn,          {.v = colemakcmd } },
-	{ MODKEY,	    XK_v,                      spawn,          {.v = qwertycmd } },
+	{ MODKEY,	          XK_Return,                 spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask, XK_Return,                 spawn,          {.v = scratchpadcmd } },
+	{ MODKEY,	          XK_w,                      spawn,          {.v = browsercmd } },
+	{ MODKEY,	          XK_b,                      spawn,          {.v = bgchangecmd } },
+	{ MODKEY,	          XK_c,                      spawn,          {.v = colemakcmd } },
+	{ MODKEY,	          XK_v,                      spawn,          {.v = qwertycmd } },
 	{ MODKEY,           XK_f,                      togglebar,      {0} },
 	{ MODKEY|ShiftMask, XK_j,                      incnmaster,     {.i = +1 } },
 	{ MODKEY|ShiftMask, XK_k,                      incnmaster,     {.i = -1 } },
@@ -97,15 +102,16 @@ static Key keys[] = {
 	{ MODKEY,           XK_k,                      setmfact,       {.f = +0.05} },
 	{ MODKEY,           XK_e,                      hidewin,        {0} },
 	{ MODKEY|ShiftMask, XK_e,                      restorewin,     {0} },
-	{ MODKEY|ShiftMask, XK_z,      		       rotatestack,    {.i = +1 } },
-	{ MODKEY|ShiftMask, XK_x,      		       rotatestack,    {.i = -1 } },
+	{ MODKEY|ShiftMask, XK_z,      		             rotatestack,    {.i = +1 } },
+	{ MODKEY|ShiftMask, XK_x,      		             rotatestack,    {.i = -1 } },
 	{ MODKEY,           XK_z,                      focusstack,     {.i = +1 } },
 	{ MODKEY,           XK_x,                      focusstack,     {.i = -1 } },
 	{ MODKEY,           XK_Tab,                    view,           {0} },
-	{ MODKEY,	    XK_q,                      killclient,     {0} },
+	{ MODKEY,	          XK_q,                      killclient,     {0} },
 	{ MODKEY,           XK_i,                      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,           XK_o,                      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,           XK_p,                      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY|ShiftMask, XK_p,                      spawn,          {.v = suspendcmd } },
 	{ MODKEY,           XK_space,                  setlayout,      {0} },
 	{ MODKEY|ShiftMask, XK_space,                  togglefloating, {0} },
 	{ MODKEY,           XK_0,                      view,           {.ui = ~0 } },

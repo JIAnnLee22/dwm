@@ -1,12 +1,10 @@
 #!/bin/bash
 
+sleep 3 
 bash ~/dwm/scripts/status.sh  &
 bash ~/dwm/scripts/tap-to-click.sh  &
 bash ~/dwm/scripts/bg-change.sh &
 libinput-gestures-setup start &
 picom &
-sleep 3 
 fcitx5 &
-nm-applet &
-blueman-applet &
 optimus-manager-qt &

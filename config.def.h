@@ -9,6 +9,7 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
+static const int viewontag          = 1;     /* Switch view on tag switch */
 static const char *fonts[]          = { "Sauce Code Pro:size=14" };
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -36,9 +37,11 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      		instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     		NULL,       NULL,       0,            1,           -1 },
-	{ "jetbrains-studio",   NULL,       "win0",     0, 	      1,           -1 },
+	/* class 		instance    title       			tags mask     isfloating   monitor */
+	{ "gimp-2.10", 		NULL,       "GNU Image Manipulation Program",   0,            0,           -1 },
+	{ "jetbrains-studio",   NULL,       "win0",     			0, 	      1,           -1 },
+	{ "weixin", 		NULL, 	    NULL, 	  			0, 	      1,           -1 },
+	{ "telegram-desktop",   NULL, 	    NULL, 				0, 	      1,           -1 },
 };
 
 /* layout(s) */
@@ -96,7 +99,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_Return, togglescratch,  {.v = scratchpadcmd } },
+	{ MODKEY, 	                XK_s, 	   togglescratch,  {.v = scratchpadcmd } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)

@@ -8,3 +8,5 @@ vim.o.shiftwidth = 2
 vim.o.smartcase = true
 
 vim.o.scrolloff = 10
+vim.cmd[[colorscheme tokyonight]]
+vim.opt.termguicolors = true

@@ -38,6 +38,7 @@ static const Rule rules[] = {
 	{ "jetbrains-studio", NULL,    NULL, 0,        1,         -1 },
 	{ "weixin",           NULL,    NULL, 0,        1,         -1 },
 	{ "telegram-desktop", NULL,    NULL, 0,        1,         -1 },
+	{ "yesplaymusic",     NULL,    NULL, 0,        1,         -1 },
 };
 
 /* layout(s) */
@@ -72,11 +73,13 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *slockcmd[]  = { "slock", NULL, NULL};
 static const char *changebgcmd[]  = { "feh", "--randomize", "--bg-fill", "/home/jiannlee22/pictures", NULL};
+static const char *screenshotcmd[]  = { "flameshot", "gui", NULL};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = screenshotcmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_w,      spawn,          {.v = changebgcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },

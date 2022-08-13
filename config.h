@@ -12,8 +12,8 @@ static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
 static const int viewontag          = 1;     /* switch view on tag */
-static const char *fonts[]          = { "monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
+static const char *fonts[]          = { "monospace:size=12", "Source Han Sans CN Normal:size=12" };
+static const char dmenufont[]       = "Source Han Sans CN Normal:size=12";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -36,7 +36,7 @@ static const Rule rules[] = {
 	/* class              instance title tags mask isfloating monitor */
 	{ "gimp-2.10",        NULL,    NULL, 0,        0,         -1 },
 	{ "jetbrains-studio", NULL,    NULL, 0,        1,         -1 },
-	{ "weixin",           NULL,    NULL, 0,        1,         -1 },
+	{ "wechat.exe",       NULL,    NULL, 0,        1,         -1 },
 	{ "telegram-desktop", NULL,    NULL, 0,        1,         -1 },
 	{ "yesplaymusic",     NULL,    NULL, 0,        1,         -1 },
 };
@@ -74,11 +74,11 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *slockcmd[]  = { "slock", NULL, NULL};
 static const char *changebgcmd[]  = { "feh", "--randomize", "--bg-fill", "/home/jiannlee22/pictures", NULL};
 static const char *screenshotcmd[]  = { "flameshot", "gui", NULL};
+static const char *roficmd[]  = { "rofi", "-show", "drun", NULL};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_p,      spawn,          {.v = roficmd } },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = screenshotcmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_w,      spawn,          {.v = changebgcmd } },

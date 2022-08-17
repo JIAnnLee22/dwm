@@ -66,7 +66,7 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "tabbed", "-c", "-r", "2", "st", "-w", "\'\'", "-e", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -75,6 +75,7 @@ static const char *slockcmd[]  = { "slock", NULL, NULL};
 static const char *changebgcmd[]  = { "feh", "--randomize", "--bg-fill", "/home/jiannlee22/pictures", NULL};
 static const char *screenshotcmd[]  = { "flameshot", "gui", NULL};
 static const char *roficmd[]  = { "rofi", "-show", "drun", NULL};
+static const char *surfcmd[]  = { "tabbed", "-c", "-n", "surf", "surf", "-e", NULL};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -82,11 +83,13 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = screenshotcmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_w,      spawn,          {.v = changebgcmd } },
+	{ MODKEY,                       XK_y,      spawn,          {.v = surfcmd } },
+	{ MODKEY,                       XK_o,      spawn,          {.v = slockcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_l,      incnmaster,     {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_h,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_z, 	   zoom,           {0} },
@@ -107,7 +110,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
 	{ MODKEY,                       XK_s,      togglescratch,  {.v = scratchpadcmd } },
-	{ MODKEY,                       XK_o,      spawn,          {.v = slockcmd } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)

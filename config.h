@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 0;        /* border pixel of windows */
+static const unsigned int borderpx  = 5;        /* border pixel of windows */
 static const unsigned int gappx     = 5;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
@@ -76,6 +76,7 @@ static const char *changebgcmd[]  = { "feh", "--randomize", "--bg-fill", "/home/
 static const char *screenshotcmd[]  = { "flameshot", "gui", NULL};
 static const char *roficmd[]  = { "rofi", "-show", "drun", NULL};
 static const char *surfcmd[]  = { "tabbed", "-c", "-n", "surf", "surf", "-e", NULL};
+static const char *qutebrowsercmd[]  = { "qutebrowser", NULL};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -83,7 +84,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = screenshotcmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_w,      spawn,          {.v = changebgcmd } },
-	{ MODKEY,                       XK_y,      spawn,          {.v = surfcmd } },
+	{ MODKEY|ShiftMask,             XK_n,      spawn,          {.v = surfcmd } },
+	{ MODKEY,                       XK_n,      spawn,          {.v = qutebrowsercmd } },
 	{ MODKEY,                       XK_o,      spawn,          {.v = slockcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },

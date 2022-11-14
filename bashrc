@@ -5,8 +5,14 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-alias vi='nvim'
-alias vim='nvim'
 alias ra='ranger'
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
+
+EDITOR=vim
+alias nvi='nvim'
+alias vi='vim'
+
+export HISTTIMEFORMAT='%F %T '
+export HISTCONTROL=ignoreboth
+# export PATH=

@@ -1,47 +1,33 @@
 vim.cmd [[packadd packer.nvim]]
 
-return require('packer').startup(function()
-	-- packer itself
-	use 'wbthomason/packer.nvim'
+return require('packer').startup(function(use)
+	-- lsp
+	use { "williamboman/mason.nvim" }
+	use { "williamboman/mason-lspconfig.nvim" }
+	use { "neovim/nvim-lspconfig" }
 
-	-- nvim tree
+	-- lsp completion
+	use { 'hrsh7th/nvim-cmp' }
+	use { 'hrsh7th/cmp-nvim-lsp' }
+	use { 'hrsh7th/cmp-path' }
+	use { 'hrsh7th/cmp-cmdline' }
+	-- For vsnip users.
+	use { 'hrsh7th/cmp-vsnip' }
+	use { 'hrsh7th/vim-vsnip' }
+
+	-- colorscheme
+	use { 'folke/tokyonight.nvim' }
+	use { "catppuccin/nvim", as = "catppuccin" }
+
+	-- smooth scroller
+	use 'karb94/neoscroll.nvim'
+
+	-- nvim-tree
 	use {
-		'kyazdani42/nvim-tree.lua',
+		'nvim-tree/nvim-tree.lua',
 		requires = {
-			'kyazdani42/nvim-web-devicons', -- optional, for file icon
-		}
+			'nvim-tree/nvim-web-devicons', -- optional, for file icons
+		},
+		tag = 'nightly' -- optional, updated every week. (see issue #1193)
 	}
-
-	-- colorizer
-	use {
-		'norcalli/nvim-colorizer.lua',
-		config = function()
-			require('conf.nvim-colorizer')
-		end
-	}
-	-- lspconfig
-	use {
-		"williamboman/nvim-lsp-installer",
-		"neovim/nvim-lspconfig",
-	}
-	use {
-		'karb94/neoscroll.nvim',
-		config = function()
-			require('neoscroll').setup {}
-		end
-	}
-	-- nvim-cmp
-	use 'hrsh7th/cmp-nvim-lsp' -- { name = nvim_lsp }
-	use 'hrsh7th/cmp-buffer' -- { name = 'buffer' },
-	use 'hrsh7th/cmp-path' -- { name = 'path' }
-	use 'hrsh7th/cmp-cmdline' -- { name = 'cmdline' }
-	use 'hrsh7th/nvim-cmp'
-	-- vsnip
-	use 'hrsh7th/cmp-vsnip' -- { name = 'vsnip' }
-	use 'hrsh7th/vim-vsnip'
-	use 'rafamadriz/friendly-snippets'
-	-- lspkind
-	use 'onsails/lspkind-nvim'
-	use 'folke/tokyonight.nvim'
-	use { 'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons' }
 end)

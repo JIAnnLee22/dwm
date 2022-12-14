@@ -1,10 +1,7 @@
-require "plugins"
-require "lsp.lspinstaller"
-require "conf.options"
-require "conf.keymaps"
-require "conf.nvim-tree"
-require "conf.nvim-colorizer"
-require "conf.fcitx5"
-require "conf.neoscroll"
-require "conf.nvim-cmp"
-require "conf.bufferline"
+require('plugins')
+require('conf.basic')
+require('conf.nvim-tree')
+require('conf.neoscroll')
+require('lsp.mason')
+require('lsp.mason-lspconfig')
+require('lsp.cmp')

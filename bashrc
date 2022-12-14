@@ -9,7 +9,7 @@ alias ra='ranger'
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
-EDITOR=vim
+EDITOR=nvim
 alias nvi='nvim'
 alias vi='vim'
 

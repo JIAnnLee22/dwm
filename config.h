@@ -79,6 +79,7 @@ static const char *screenshotcmd[]  = { "flameshot", "gui", NULL};
 static const char *roficmd[]  = { "rofi", "-show", "drun", NULL};
 static const char *surfcmd[]  = { "tabbed", "-c", "-n", "surf", "surf", "-e", NULL};
 static const char *qutebrowsercmd[]  = { "qutebrowser", NULL};
+static const char *toggletouchpadcmd[]  = { "synclient", "TouchpadOff=$(synclient", "-l" "|", "grep", "-c", "'TouchpadOff.*=.*0')", NULL};
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -90,6 +91,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_n,      spawn,          {.v = surfcmd } },
 	{ MODKEY,                       XK_n,      spawn,          {.v = qutebrowsercmd } },
 	{ MODKEY,                       XK_o,      spawn,          {.v = slockcmd } },
+	{ MODKEY,                       XF86XK_TouchpadToggle,      spawn,          {.v = toggletouchpadcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },

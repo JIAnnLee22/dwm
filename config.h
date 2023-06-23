@@ -80,10 +80,12 @@ static const char *roficmd[]  = { "rofi", "-show", "drun", NULL};
 static const char *surfcmd[]  = { "tabbed", "-c", "-n", "surf", "surf", "-e", NULL};
 static const char *qutebrowsercmd[]  = { "qutebrowser", NULL};
 static const char *toggletouchpadcmd[]  = { "synclient", "TouchpadOff=$(synclient", "-l" "|", "grep", "-c", "'TouchpadOff.*=.*0')", NULL};
+static const char *brightcmd[2][4]  = {{ "brightnessctl", "s", "2%+", NULL}, { "brightnessctl", "s", "2%-", NULL}};
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = roficmd } },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = screenshotcmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termTmuxcmd } },
@@ -118,6 +120,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
 	{ MODKEY,                       XK_s,      togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY|ShiftMask,             XK_s,      togglescratch,  {.v = scratchpadTmuxcmd } },
+	{ 0,                            XF86XK_MonBrightnessUp,    spawn,          {.v = brightcmd[0] } },
+	{ 0,                            XF86XK_MonBrightnessDown,  spawn,          {.v = brightcmd[1] } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)

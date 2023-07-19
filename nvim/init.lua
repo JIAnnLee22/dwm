@@ -1,6 +1,6 @@
 require('plugins')
 require('conf.basic')
-require('conf.nvim-tree')
+require('conf.nvimtree')
 require('conf.neoscroll')
 require('lsp.mason')
 require('lsp.mason-lspconfig')

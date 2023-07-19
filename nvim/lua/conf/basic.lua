@@ -19,6 +19,10 @@ keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.keymap.set('n', '<space>ntt', ':NvimTreeToggle<CR>', opts)
+vim.keymap.set('n', '<space>ntf', ':NvimTreeFocus<CR>', opts)
+
+vim.keymap.set('n', '<space>ntl', ':NvimTreeResize +3<CR>', opts)
+vim.keymap.set('n', '<space>nth', ':NvimTreeResize -3<CR>', opts)
 
 
 local autocmd = vim.api.nvim_create_autocmd

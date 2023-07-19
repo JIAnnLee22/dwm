@@ -99,6 +99,11 @@ _G.packer_plugins = {
     path = "/home/jiannlee22/.local/share/nvim/site/pack/packer/start/cmp-vsnip",
     url = "https://github.com/hrsh7th/cmp-vsnip"
   },
+  ["flutter-tools.nvim"] = {
+    loaded = true,
+    path = "/home/jiannlee22/.local/share/nvim/site/pack/packer/start/flutter-tools.nvim",
+    url = "https://github.com/akinsho/flutter-tools.nvim"
+  },
   ["mason-lspconfig.nvim"] = {
     loaded = true,
     path = "/home/jiannlee22/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim",
@@ -133,6 +138,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/jiannlee22/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/nvim-tree/nvim-web-devicons"
+  },
+  ["plenary.nvim"] = {
+    loaded = true,
+    path = "/home/jiannlee22/.local/share/nvim/site/pack/packer/start/plenary.nvim",
+    url = "https://github.com/nvim-lua/plenary.nvim"
   },
   ["tokyonight.nvim"] = {
     loaded = true,

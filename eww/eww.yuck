@@ -1,11 +1,24 @@
 (defwidget bar []
-  (centerbox :orientation "h" :stack "fg"
+  (centerbox :orientation "h" :stack "fg" :class "bar" 
     (workspaces)
     (window_w)
-    (sidestuff)))
+    (sidestuff_systray)))
+
+(defwidget sidestuff_systray [] 
+  (centerbox :orientation "h" :halign "end"
+		""
+    (sidestuff)
+    (systray_container)))
+
+(defwidget systray_container []
+ (box :class "sidestuff"
+ (systray :orientation "h"
+	:iconsize "15px"
+	:spacing "5px"
+ )))
 
 (defwidget sidestuff []
-  (box :class "sidestuff" :orientation "h" :space-evenly false :halign "end"
+  (box :orientation "h" :space-evenly false :class "sidestuff"
     (metric :label "🔊"
             :value volume
             :onchange "amixer -D pulse sset Master {}%")
@@ -25,9 +38,9 @@
       (label :text "${workspaces}${current_workspace}" :visible false)
       (for workspace in workspaces
         (eventbox :onclick "hyprctl dispatch workspace ${workspace.id}"
-          (box :class "workspace-item-normal ${workspace.id == current_workspace ? "workspace-item-current" : "workspace-item-normal"}"
-							 :width 30
-							 :height 30
+          (box :class "${workspace.id == current_workspace ? "workspaces-item-current" : "workspaces-item-normal"}"
+							 :width 25
+							 :height 25
             (label :text "${workspace.id}")
             )
           )
@@ -38,7 +51,7 @@
 (deflisten window :initial "..." "sh scripts/get-window-title")
 (defwidget window_w []
   (box
-		:class "window-title"
+		:class "${window != "" ? "window-title" : ""}"
     (label
 			:text "${window}"
 			:limit-width 10
@@ -68,7 +81,7 @@
   :geometry (geometry :x "0%"
                       :y "0%"
                       :width "100%"
-                      :height "30px"
+                      :height "20px"
                       :anchor "top center")
 	:stacking "fg"
   :reserve (struts :side "top" :distance "4%")

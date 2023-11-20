@@ -3,16 +3,16 @@
 }
 
 $primary-bg: #996699;
-$primary-selected-bg: #999999;
+$primary-selected-bg: #ee66ee;
 $primary-color: #FFFFFF;
 $large-padding: 16px;
 $middle-padding: 9px;
+$small-padding: 4px;
 $large-radius: 16px;
 
 //Global Styles
 .bar {
-  color: $primary-color;
-  padding: $large-padding;
+	padding: $small-padding;
 }
 
 // Styles on classes (see eww.yuck for more information)
@@ -21,30 +21,36 @@ $large-radius: 16px;
 .workspaces-widget {
   background-color: $primary-bg;
   color: $primary-color;
-  padding: $large-padding;
 	border-radius: $large-radius;
+	padding: $small-padding;
 }
 .workspaces-item-current {
   background-color: $primary-selected-bg;
   color: $primary-color;
-  padding: 10px;
+	border-radius: $large-radius;
 }
 .workspaces-item-normal {
   background-color: $primary-bg;
   color: $primary-color;
-  padding: 10px;
+	border-radius: $large-radius;
 }
 .window-title {
   background-color: $primary-bg;
   color: $primary-color;
-  padding: $large-padding;
 	border-radius: $large-radius;
+	padding-left: $middle-padding;
+	padding-right: $middle-padding;
+	padding-top: $small-padding;
+	padding-bottom: $small-padding;
 }
 .sidestuff {
   background-color: $primary-bg;
   color: $primary-color;
-  padding: $large-padding;
 	border-radius: $large-radius;
+	padding-left: $middle-padding;
+	padding-right: $middle-padding;
+	padding-top: $small-padding;
+	padding-bottom: $small-padding;
 }
 .sidestuff slider {
   all: unset;

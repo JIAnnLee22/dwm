@@ -2,20 +2,54 @@
   all: unset; //Unsets everything so you can style everything from scratch
 }
 
+$primary-bg: #996699;
+$primary-selected-bg: #999999;
+$primary-color: #FFFFFF;
+$large-padding: 16px;
+$middle-padding: 9px;
+$large-radius: 16px;
+
 //Global Styles
 .bar {
-  background-color: #3a3a3a;
-  color: #b0b4bc;
-  padding: 10px;
+  color: $primary-color;
+  padding: $large-padding;
 }
 
 // Styles on classes (see eww.yuck for more information)
 
+// workspace
+.workspaces-widget {
+  background-color: $primary-bg;
+  color: $primary-color;
+  padding: $large-padding;
+	border-radius: $large-radius;
+}
+.workspaces-item-current {
+  background-color: $primary-selected-bg;
+  color: $primary-color;
+  padding: 10px;
+}
+.workspaces-item-normal {
+  background-color: $primary-bg;
+  color: $primary-color;
+  padding: 10px;
+}
+.window-title {
+  background-color: $primary-bg;
+  color: $primary-color;
+  padding: $large-padding;
+	border-radius: $large-radius;
+}
+.sidestuff {
+  background-color: $primary-bg;
+  color: $primary-color;
+  padding: $large-padding;
+	border-radius: $large-radius;
+}
 .sidestuff slider {
   all: unset;
   color: #ffd5cd;
 }
-
 .metric scale trough highlight {
   all: unset;
   background-color: #D35D6E;

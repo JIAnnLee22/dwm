@@ -39,6 +39,7 @@ static const Rule rules[] = {
 	{ "wechat.exe",       NULL,    NULL, 0,        1,         -1 },
 	{ "telegram-desktop", NULL,    NULL, 0,        1,         -1 },
 	{ "yesplaymusic",     NULL,    NULL, 0,        1,         -1 },
+	{ "scrcpy",     			NULL,    NULL, 0,        1,         -1 },
 };
 
 /* layout(s) */

@@ -33,13 +33,13 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class              instance title tags mask isfloating monitor */
-	{ "gimp-2.10",        NULL,    NULL, 0,        0,         -1 },
-	{ "jetbrains-studio", NULL,    NULL, 0,        1,         -1 },
-	{ "wechat.exe",       NULL,    NULL, 0,        1,         -1 },
-	{ "telegram-desktop", NULL,    NULL, 0,        1,         -1 },
-	{ "yesplaymusic",     NULL,    NULL, 0,        1,         -1 },
-	{ "scrcpy",     			NULL,    NULL, 0,        1,         -1 },
+	/* class              		instance title tags mask isfloating monitor */
+	{ "jetbrains-studio", 		NULL,    NULL, 0,        1,         -1 },
+	{ "wechat.exe",       		NULL,    NULL, 0,        1,         -1 },
+	{ "telegram-desktop", 		NULL,    NULL, 0,        1,         -1 },
+	{ "yesplaymusic",     		NULL,    NULL, 0,        1,         -1 },
+	{ "scrcpy",     					NULL,    NULL, 0,        1,         -1 },
+	{ "org.gnome.Nautilus",  	NULL,    NULL, 0,        1,         -1 },
 };
 
 /* layout(s) */

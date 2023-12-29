@@ -75,18 +75,19 @@ static const char *scratchpadTmuxcmd[] = { "st", "-t", scratchpadname, "-w", "",
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *slockcmd[]  = { "slock", NULL, NULL};
-static const char *changebgcmd[]  = { "feh", "--randomize", "--bg-fill", "/home/jiannlee22/pictures", NULL};
+static const char *changebgcmd[]  = { "feh", "--randomize", "--bg-fill", "/home/jiannlee22/Pictures", NULL};
 static const char *screenshotcmd[]  = { "flameshot", "gui", NULL};
 static const char *roficmd[]  = { "rofi", "-show", "drun", NULL};
 static const char *surfcmd[]  = { "tabbed", "-c", "-n", "surf", "surf", "-e", NULL};
 static const char *qutebrowsercmd[]  = { "qutebrowser", NULL};
+static const char *filescmd[]  = { "nautilus", NULL};
 static const char *toggletouchpadcmd[]  = { "synclient", "TouchpadOff=$(synclient", "-l" "|", "grep", "-c", "'TouchpadOff.*=.*0')", NULL};
 static const char *brightcmd[2][4]  = {{ "brightnessctl", "s", "2%+", NULL}, { "brightnessctl", "s", "2%-", NULL}};
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = roficmd } },
-	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_e,      spawn,          {.v = filescmd } },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = screenshotcmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termTmuxcmd } },

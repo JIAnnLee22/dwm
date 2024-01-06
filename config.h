@@ -40,6 +40,7 @@ static const Rule rules[] = {
 	{ "yesplaymusic",     		NULL,    NULL, 0,        1,         -1 },
 	{ "scrcpy",     					NULL,    NULL, 0,        1,         -1 },
 	{ "org.gnome.Nautilus",  	NULL,    NULL, 0,        1,         -1 },
+	{ "feh",  								NULL,    NULL, 0,        1,         -1 },
 };
 
 /* layout(s) */

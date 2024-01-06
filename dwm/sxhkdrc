@@ -1,0 +1,53 @@
+# restart sxhkd
+super + Escape
+	pkill -USR1 -x sxhkd
+
+super + p
+	sh ~/.config/dwm/scripts/shot_x11_show.sh
+super + c
+	sh ~/.config/dwm/scripts/shot_x11_clip.sh
+super + Return
+	st
+super + d
+	rofi -show drun
+
+# dwmc
+super + {k,j}
+	dwmc focusstack {-,+}1
+
+super + shift + {k,j}
+	dwmc movestack {-,+}1
+
+super + {h,l}
+	dwmc setmfact {-,+}0.05
+
+super + b
+	dwmc togglebar
+
+super + shift + p
+	dwmc togglefloating
+
+super + q
+	dwmc killclient
+
+super + shift + {q,r}
+	dwmc quit {0,1}
+
+super + Tab
+	dwmc view
+
+super + {t,f,m}
+	dwmc setlayoutex {0,1,2}
+
+super + {_,ctrl +}{_,shift +} {1-9}
+	dwmc {_,toggle}{viewex,tagex} {0-8}
+
+super + 0
+	dwmc viewall
+
+super + {minus,plus}
+	dwmc setgaps {-,+}1
+
+super + s
+	dwmc toggoletouchpadex { "st", "-t", "scratchpad", "-g", "120x34", NULL };
+

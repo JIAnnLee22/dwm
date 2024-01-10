@@ -12,7 +12,7 @@ static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
 static const int viewontag          = 1;     /* switch view on tag */
-static const char *fonts[]          = { "monospace:size=12", "Source Han Sans CN Normal:size=12" };
+static const char *fonts[]          = { "monospace:size=12", "WenQuanYi Micro Hei Mono Light:size=12" };
 static const char dmenufont[]       = "Source Han Sans CN Normal:size=12";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -33,14 +33,14 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class              		instance title tags mask isfloating monitor */
-	{ "jetbrains-studio", 		NULL,    NULL, 0,        1,         -1 },
-	{ "wechat.exe",       		NULL,    NULL, 0,        1,         -1 },
-	{ "telegram-desktop", 		NULL,    NULL, 0,        1,         -1 },
-	{ "yesplaymusic",     		NULL,    NULL, 0,        1,         -1 },
-	{ "scrcpy",     					NULL,    NULL, 0,        1,         -1 },
-	{ "org.gnome.Nautilus",  	NULL,    NULL, 0,        1,         -1 },
-	{ "feh",  								NULL,    NULL, 0,        1,         -1 },
+	/* class      						instance    title       tags mask isfloating   monitor    float x,y,w,h    	floatborderpx*/
+	{ "jetbrains-studio", 		NULL,    		NULL, 			0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
+	{ "wechat.exe",       		NULL,    		NULL, 			0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
+	{ "telegram-desktop", 		NULL,    		NULL, 			0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
+	{ "yesplaymusic",     		NULL,    		NULL, 			0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
+	{ "scrcpy",     					NULL,    		NULL, 			0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
+	{ "org.gnome.Nautilus",  	NULL,    		NULL, 			0,   			1,   				 -1, 				0,0,2000,1200,		0},
+	{ "feh",  								NULL,    		NULL, 			0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
 };
 
 /* layout(s) */

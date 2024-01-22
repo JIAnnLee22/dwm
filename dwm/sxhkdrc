@@ -12,8 +12,6 @@ super + d
 	rofi -show drun
 super + e
 	nautilus
-super + p
-	sh scrcpy
 super + w
   feh --randomize --bg-fill /home/jiannlee22/Pictures
 

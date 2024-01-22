@@ -2,7 +2,7 @@
 super + Escape
 	pkill -USR1 -x sxhkd
 
-super + p
+super + s
 	sh ~/.config/dwm/scripts/shot_x11_show.sh
 super + c
 	sh ~/.config/dwm/scripts/shot_x11_clip.sh
@@ -10,6 +10,16 @@ super + Return
 	st
 super + d
 	rofi -show drun
+super + e
+	nautilus
+super + p
+	sh scrcpy
+super + w
+  feh --randomize --bg-fill /home/jiannlee22/Pictures
+
+# suckless
+super + o
+	slock
 
 # dwmc
 super + {k,j}
@@ -30,8 +40,8 @@ super + shift + p
 super + q
 	dwmc killclient
 
-super + shift + {q,r}
-	dwmc quit {0,1}
+super + shift + q
+	dwmc quit
 
 super + Tab
 	dwmc view
@@ -48,6 +58,7 @@ super + 0
 super + {minus,plus}
 	dwmc setgaps {-,+}1
 
-super + s
-	dwmc toggoletouchpadex { "st", "-t", "scratchpad", "-g", "120x34", NULL };
+# super + s
+	#dwmc toggoletouchpadex "st -t 'scratchpad' -g '121x34' -w 'st-windowid'"
+	#dwmc toggoletouchpadex { "st", "-t", "scratchpad", "-g", "120x34", "-w", "st-windowid", NULL }
 

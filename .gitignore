@@ -1,2 +1,3 @@
 nvim/site/pack/packer/start
-mvim/mason/
+nvim/mason/
+nvim/plugin/

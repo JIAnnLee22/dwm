@@ -1,0 +1,49 @@
+let mapleader=" "
+
+set keep-english-in-normal
+set clipboard=unnamed
+set showmode
+set easymotion
+set surround
+set hlsearch
+set nu
+set NERDTree
+
+noremap ; :
+
+noremap Q :action CloseContent<CR>
+noremap <C-S-Q> :action CloseProject<CR>
+noremap <C-A-S-Q> :action Exit<CR>
+
+" Nerdtree
+noremap <C-T> :NERDTree<CR>
+
+noremap <leader>sl :action MoveTabRight<CR>
+noremap <leader>sj :action MoveTabDown<CR>
+noremap <leader>sk :action SplitHorizontally<CR>
+noremap <leader>sh :action SplitVertically<CR>
+noremap <leader>ss :action MoveEditorToOppositeTabGroup<CR>
+noremap <leader>sa :action OpenEditorInOppositeTabGroup<CR>
+
+noremap <leader>fj :action Android.BuildApk<CR>
+noremap <leader>fk :action Android.GenerateSignedApk<CR>
+noremap <leader>fl :action Android.SyncProject<CR>
+noremap <leader>fe :action Gradle.ExecuteTask<CR>
+noremap <leader>fr :action Run<CR>
+noremap <leader>fe :action android.deploy.ApplyChanges<CR>
+noremap <leader>fw :action android.deploy.CodeSwap<CR>
+
+noremap <leader>cn :action CloseAllNotifications<CR>
+noremap <leader>cm :action HideAllWindows<CR>
+
+noremap <leader>lm :action FileStructurePopup<CR>
+
+noremap <leader>/ :action Find<CR>
+
+noremap <leader><CR> :noh<CR>
+
+noremap tj :action NextTab<CR>
+noremap tk :action PreviousTab<CR>
+
+noremap gf :action GotoImplementation<CR>
+noremap gs :action ShowUsages<CR>

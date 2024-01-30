@@ -24,6 +24,12 @@ vim.keymap.set('n', '<space>ntf', ':NvimTreeFocus<CR>', opts)
 vim.keymap.set('n', '<space>ntl', ':NvimTreeResize +3<CR>', opts)
 vim.keymap.set('n', '<space>nth', ':NvimTreeResize -3<CR>', opts)
 
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+
 
 local autocmd = vim.api.nvim_create_autocmd
 -- auto close nvimtree when last window close

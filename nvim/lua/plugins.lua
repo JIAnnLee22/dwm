@@ -38,4 +38,9 @@ return require('packer').startup(function(use)
 			'stevearc/dressing.nvim',   -- optional for vim.ui.select
 		},
 	}
+	use {
+		'nvim-telescope/telescope.nvim', tag = '0.1.5',
+		-- or                            , branch = '0.1.x',
+		requires = { {'nvim-lua/plenary.nvim'} }
+	}
 end)

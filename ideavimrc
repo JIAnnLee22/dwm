@@ -32,6 +32,7 @@ noremap <leader>fe :action Gradle.ExecuteTask<CR>
 noremap <leader>fr :action Run<CR>
 noremap <leader>fe :action android.deploy.ApplyChanges<CR>
 noremap <leader>fw :action android.deploy.CodeSwap<CR>
+noremap <leader>fc :action CleanGradleProject<CR>
 
 noremap <leader>cn :action CloseAllNotifications<CR>
 noremap <leader>cm :action HideAllWindows<CR>

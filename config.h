@@ -39,7 +39,7 @@ static const Rule rules[] = {
 	{ "telegram-desktop", 		NULL,    		NULL, 			0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
 	{ "yesplaymusic",     		NULL,    		NULL, 			0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
 	{ "scrcpy",     					NULL,    		NULL, 			0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
-	{ "org.gnome.Nautilus",  	NULL,    		NULL, 			0,   			1,   				 -1, 				0,0,2000,1200,		0},
+	{ "org.gnome.Nautilus",  	NULL,    		NULL, 			0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
 	{ "feh",  								NULL,    		NULL, 			0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
 };
 

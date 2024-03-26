@@ -36,6 +36,7 @@ static const Rule rules[] = {
 	/* class      						instance    title       tags mask isfloating   monitor    float x,y,w,h    	floatborderpx*/
 	{ "jetbrains-studio", 		NULL,    		NULL, 			0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
 	{ "wechat.exe",       		NULL,    		NULL, 			0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
+	{ "wechat",       				NULL,    		NULL, 			0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
 	{ "telegram-desktop", 		NULL,    		NULL, 			0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
 	{ "yesplaymusic",     		NULL,    		NULL, 			0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
 	{ "scrcpy",     					NULL,    		NULL, 			0,   			1,   				 -1, 				-1,-1,-1,-1,			0},

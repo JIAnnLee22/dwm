@@ -34,7 +34,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      						instance    title       tags mask 		isfloating   monitor    float x,y,w,h    	floatborderpx*/
-	{ "google-chrome-stable",	NULL,    		NULL, 			1<<1,					0,   				 -1, 				-1,-1,-1,-1,			0},
+	{ "google-chrome",				NULL,    		NULL, 			1<<1,					0,   				 -1, 				-1,-1,-1,-1,			0},
 	{ "jetbrains-studio", 		NULL,    		NULL, 			1<<2,					1,   				 -1, 				-1,-1,-1,-1,			0},
 	{ "wechat.exe",       		NULL,    		NULL, 			1<<8,   			1,   				 -1, 				-1,-1,-1,-1,			0},
 	{ "wechat",       				NULL,    		NULL, 			1<<8,   			1,   				 -1, 				-1,-1,-1,-1,			0},
@@ -42,7 +42,7 @@ static const Rule rules[] = {
 	{ "yesplaymusic",     		NULL,    		NULL, 			1<<8,   			1,   				 -1, 				-1,-1,-1,-1,			0},
 	{ "feishu",       				NULL,    		NULL, 			1<<0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
 	{ "scrcpy",     					NULL,    		NULL, 			1<<0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
-	{ "org.gnome.Nautilus",  	NULL,    		NULL, 			1<<0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
+	{ "org.gnome.Nautilus",  	NULL,    		NULL, 			0, 		  			1,   				 -1, 				-1,-1,-1,-1,			0},
 	{ "feh",  								NULL,    		NULL, 			1<<0,   			1,   				 -1, 				-1,-1,-1,-1,			0},
 };
 
@@ -54,9 +54,9 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
+	{ "[M]",      monocle },
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
 };
 
 /* key definitions */
@@ -110,9 +110,9 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_z, 	   zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },

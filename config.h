@@ -72,10 +72,8 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *termcmd[]  = { "tabbed", "-c", "-r", "2", "st", "-w", "", NULL };
-static const char *termTmuxcmd[]  = { "tabbed", "-c", "-r", "2", "st", "-w", "", "-e", "tmux", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
-static const char *scratchpadTmuxcmd[] = { "st", "-t", scratchpadname, "-w", "", "-g", "120x34", "-e", "tmux", NULL };
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *slockcmd[]  = { "slock", NULL, NULL};
@@ -94,7 +92,6 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_e,      spawn,          {.v = filescmd } },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = screenshotcmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termTmuxcmd } },
 	{ MODKEY,                       XK_w,      spawn,          {.v = changebgcmd } },
 	{ MODKEY|ShiftMask,             XK_n,      spawn,          {.v = surfcmd } },
 	{ MODKEY,                       XK_n,      spawn,          {.v = qutebrowsercmd } },
@@ -125,7 +122,6 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
 	{ MODKEY,                       XK_s,      togglescratch,  {.v = scratchpadcmd } },
-	{ MODKEY|ShiftMask,             XK_s,      togglescratch,  {.v = scratchpadTmuxcmd } },
 	{ 0,                            XF86XK_MonBrightnessUp,    spawn,          {.v = brightcmd[0] } },
 	{ 0,                            XF86XK_MonBrightnessDown,  spawn,          {.v = brightcmd[1] } },
 	TAGKEYS(                        XK_1,                      0)

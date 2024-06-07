@@ -7,7 +7,7 @@
 
 alias ra='ranger'
 alias ls='ls --color=auto'
-PS1='[\u@\h \W]\$ '
+PS1='[\W] '
 
 EDITOR=nvim
 alias nvi='nvim'

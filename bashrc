@@ -16,8 +16,9 @@ alias vi='vim'
 export HISTTIMEFORMAT='%F %T '
 export HISTCONTROL=ignoreboth
 # export PATH=
-export ANDROID_SDK_ROOT=~/Android/Sdk
-export GRADLE_LOCAL_JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+export ANDROID_SDK_ROOT=~/Android/Sdk/
+PATH=$PATH:~/Android/Sdk/build-tools/30.0.3/
+export GRADLE_LOCAL_JAVA_HOME=/usr/lib/jvm/java-11-openjdk/
 
 export PUB_HOSTED_URL="https://pub.flutter-io.cn"
 export FLUTTER_STORAGE_BASE_URL="https://storage.flutter-io.cn"

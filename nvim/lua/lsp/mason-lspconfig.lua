@@ -42,8 +42,7 @@ local lsp_flags = {
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
 -- add server to servers, just ok!
-local servers = { 'lua_ls', 'clangd', 'vuels', 'volar', 'quick_lint_js', 'html', 'jsonls', 'kotlin_language_server',
-	'jdtls', 'gopls', 'golangci_lint_ls' }
+local servers = { 'lua_ls', 'clangd', 'vuels', 'volar', 'quick_lint_js', 'html', 'jsonls', 'kotlin_language_server', 'jdtls', 'gopls', 'golangci_lint_ls', 'bash_language_server'}
 for _, server in ipairs(servers) do
 	require('lspconfig')[server].setup {
 		on_attach = on_attach,

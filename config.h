@@ -27,6 +27,7 @@ static const char *colors[][3]      = {
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const int taglayouts[] = { 0, 0, 0, 0, 0, 0, 0, 0, 2 };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -72,12 +73,12 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *termcmd[]  = { "tabbed", "-c", "-r", "2", "st", "-w", "", NULL };
+static const char *termcmd[]  = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *slockcmd[]  = { "slock", NULL, NULL};
+static const char *slockcmd[]  = { "slock", "&&", "systemctl", "suspend", NULL};
 static const char *changebgcmd[]  = { "feh", "--randomize", "--bg-fill", "/home/jiannlee22/Pictures", NULL};
 static const char *screenshotcmd[]  = { "flameshot", "gui", NULL};
 static const char *roficmd[]  = { "rofi", "-show", "drun", NULL};

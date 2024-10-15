@@ -176,7 +176,9 @@ layout {
 // Add lines like this to spawn processes at startup.
 // Note that running niri as a session supports xdg-desktop-autostart,
 // which may be more convenient to use.
-// spawn-at-startup "alacritty" "-e" "fish"
+spawn-at-startup "waybar"
+spawn-at-startup "fcitx5"
+spawn-at-startup "cage" "--" "feishu"
 
 cursor {
     // Change the theme and size of the cursor as well as set the

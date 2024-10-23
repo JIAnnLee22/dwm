@@ -27,7 +27,7 @@ static const char *colors[][3]      = {
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-static const int taglayouts[] = { 0, 0, 0, 0, 0, 0, 0, 0, 2 };
+static const int taglayouts[] = { 0, 0, 0, 0, 0, 0, 0, 3, 2 };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -60,6 +60,7 @@ static const Layout layouts[] = {
 	{ "[M]",      monocle },
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
+	{ "[]]",      scroll },    /* no layout function means floating behavior */
 };
 
 /* key definitions */
@@ -113,6 +114,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_v,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },

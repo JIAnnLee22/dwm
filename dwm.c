@@ -230,6 +230,7 @@ static void restack(Monitor *m);
 static void run(void);
 static void runautostart(void);
 static void scan(void);
+static void scroll(Monitor *m);
 static int sendevent(Window w, Atom proto, int m, long d0, long d1, long d2, long d3, long d4);
 static void sendmon(Client *c, Monitor *m);
 static void setclientstate(Client *c, long state);
@@ -1740,6 +1741,26 @@ scan(void)
 		}
 		if (wins)
 			XFree(wins);
+	}
+}
+
+void
+scroll(Monitor *m)
+{
+	unsigned int i, lx, n, s, h, mw, my, ty, sx = 0;
+	Client *c, *cm;
+
+	// check has client
+	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
+	if (n == 0)
+		return;
+	for (i = 0, my = ty = m->gappx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
+		h = (m->wh - ty) / (n - i) - m->gappx;
+	  resizeclient(c, m->ww + c->bw + m->gappx, m->wy + ty, m->ww - (2*c->bw) - 2*m->gappx, m->wh - (2*c->bw) - 2*m->gappx);
+		for (cm = nexttiled(m->clients); cm != c; cm = nexttiled(cm->next)) {
+			resizeclient(cm, cm->x - lx, cm->y, cm->w, cm->h);
+		}
+		lx += c->w;
 	}
 }
 

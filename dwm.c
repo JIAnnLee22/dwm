@@ -150,7 +150,7 @@ struct Monitor {
 	Client *stack;
 	Monitor *next;
 	Window barwin;
-	const Layout *lt[2];
+	const Layout *lt[3];
 	Pertag *pertag;
 };
 
@@ -1026,6 +1026,7 @@ focusstack(const Arg *arg)
 	if (c) {
 		focus(c);
 		restack(selmon);
+		arrange(NULL);
 	}
 }
 
@@ -1747,20 +1748,22 @@ scan(void)
 void
 scroll(Monitor *m)
 {
-	unsigned int i, lx, n, s, h, mw, my, ty, sx = 0;
+	unsigned int i, n, ty, sx = 0;
 	Client *c, *cm;
 
 	// check has client
 	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
 	if (n == 0)
 		return;
-	for (i = 0, my = ty = m->gappx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
-		h = (m->wh - ty) / (n - i) - m->gappx;
-	  resizeclient(c, m->ww + c->bw + m->gappx, m->wy + ty, m->ww - (2*c->bw) - 2*m->gappx, m->wh - (2*c->bw) - 2*m->gappx);
-		for (cm = nexttiled(m->clients); cm != c; cm = nexttiled(cm->next)) {
-			resizeclient(cm, cm->x - lx, cm->y, cm->w, cm->h);
+	for (i = 0, ty = m->gappx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
+		resizeclient(c, sx + c->bw + m->gappx, m->wy + ty, m->ww * 2 / 3 - (2*c->bw) - (2*m->gappx), m->wh - (2*c->bw) - 2*m->gappx);
+		sx += m->ww * 2 / 3;
+	}
+
+	for (c = nexttiled(m->clients); c != m->sel; c = nexttiled(c->next)) {
+		for (cm = nexttiled(m->clients); cm; cm = nexttiled(cm->next)) {
+			resizeclient(cm, cm->x - m->ww * 2 / 3 , cm->y, cm->w, cm->h);
 		}
-		lx += c->w;
 	}
 }
 

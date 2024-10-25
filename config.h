@@ -54,6 +54,10 @@ static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] 
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
+static const float dwidth = 0.83333;
+/* window width set */
+static const float sizes[] = { 0.16667, 0.25000, 0.33333, 0.66667, 0.75000, 0.83333 };
+
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -117,6 +121,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_v,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	{ MODKEY,                       XK_r,      circlesize,      {.v = &sizes[3]} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },

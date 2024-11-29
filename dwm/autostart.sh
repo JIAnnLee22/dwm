@@ -5,6 +5,6 @@ feh --randomize --bg-fill ~/Pictures &
 slstatus &
 fcitx5 -d &
 feishu &
-wechat-universal &
+wechat.sh &
 lx-music &
 flameshot &

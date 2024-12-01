@@ -1,2 +1,2 @@
-waybar &
+cd ~/.config/astal/ && lua init.lua &
 fcitx5 -d &

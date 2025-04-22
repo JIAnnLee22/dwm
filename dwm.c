@@ -42,6 +42,7 @@
 #include <X11/extensions/Xinerama.h>
 #endif /* XINERAMA */
 #include <X11/Xft/Xft.h>
+#include <math.h>  /* 添加math.h头文件，用于fabs函数 */
 
 #include "drw.h"
 #include "util.h"
@@ -276,6 +277,7 @@ static int xerror(Display *dpy, XErrorEvent *ee);
 static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
+static void cyclewindowsize(const Arg *arg);
 
 /* variables */
 static Systray *systray = NULL;
@@ -970,6 +972,17 @@ focus(Client *c)
 		grabbuttons(c, 1);
 		XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
 		setfocus(c);
+		
+		/* 检查窗口是否被用户完整看到，如果部分在屏幕外则滚动到可见区域 */
+		if (!c->isfloating && !c->isfullscreen) {
+			Monitor *m = c->mon;
+			/* 检查窗口是否完全在显示器范围内 */
+			if (c->x < m->wx || c->y < m->wy || 
+				c->x + c->w > m->wx + m->ww || 
+				c->y + c->h > m->wy + m->wh) {
+				scroll(m);
+			}
+		}
 	} else {
 		XSetInputFocus(dpy, root, RevertToPointerRoot, CurrentTime);
 		XDeleteProperty(dpy, root, netatom[NetActiveWindow]);
@@ -1325,7 +1338,9 @@ monocle(Monitor *m)
 	if (n > 0) /* override layout symbol */
 		snprintf(m->ltsymbol, sizeof m->ltsymbol, "[%d]", n);
 	for (c = nexttiled(m->clients); c; c = nexttiled(c->next))
-		resize(c, m->wx, m->wy, m->ww - 2 * c->bw, m->wh - 2 * c->bw, 0);
+		resize(c, m->wx + m->gappx, m->wy + m->gappx, 
+		       m->ww - (2 * m->gappx) - (2 * c->bw), 
+		       m->wh - (2 * m->gappx) - (2 * c->bw), 0);
 }
 
 void
@@ -1748,22 +1763,46 @@ scan(void)
 void
 scroll(Monitor *m)
 {
-	unsigned int i, n, ty, sx = 0;
-	Client *c, *cm;
+	Client *c;
+	unsigned int n = 0;
+	int x = m->wx + m->gappx;  /* 考虑左边间隔 */
+	int default_w = m->ww / 2;  /* 默认窗口宽度为屏幕宽度的一半 */
+	int offset = 0;     /* 窗口整体偏移量 */
 
-	// check has client
-	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
+	/* 计算可平铺的窗口数量 */
+	for (c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
 	if (n == 0)
 		return;
-	for (i = 0, ty = m->gappx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
-		resizeclient(c, sx + c->bw + m->gappx, m->wy + ty, m->ww * 2 / 3 - (2*c->bw) - (2*m->gappx), m->wh - (2*c->bw) - 2*m->gappx);
-		sx += m->ww * 2 / 3;
+
+	/* 如果当前选中的窗口在屏幕外，计算需要的偏移量 */
+	if (m->sel && !m->sel->isfloating && !m->sel->isfullscreen) {
+		/* 找到当前窗口在水平排列中的位置 */
+		int target_x = m->wx + m->gappx;
+		for (c = nexttiled(m->clients); c && c != m->sel; c = nexttiled(c->next)) {
+			target_x += c->w + (2 * c->bw) + m->gappx;  /* 考虑窗口间隔 */
+		}
+
+		/* 如果窗口在屏幕外，计算需要的偏移量 */
+		if (target_x < m->wx + m->gappx) {
+			/* 窗口在屏幕左侧外，计算需要向右偏移的距离 */
+			offset = (m->wx + m->gappx) - target_x;
+		} else if (target_x > m->wx + m->ww - m->sel->w - (2 * m->sel->bw) - m->gappx) {
+			/* 窗口在屏幕右侧外，计算需要向左偏移的距离 */
+			offset = (m->wx + m->ww - m->sel->w - (2 * m->sel->bw) - m->gappx) - target_x;
+		}
 	}
 
-	for (c = nexttiled(m->clients); c != m->sel; c = nexttiled(c->next)) {
-		for (cm = nexttiled(m->clients); cm; cm = nexttiled(cm->next)) {
-			resizeclient(cm, cm->x - m->ww * 2 / 3 , cm->y, cm->w, cm->h);
-		}
+	/* 水平排列所有窗口，确保不重叠，并应用偏移量 */
+	x = m->wx + m->gappx;  /* 重置起始位置，考虑左边间隔 */
+	for (c = nexttiled(m->clients); c; c = nexttiled(c->next)) {
+		/* 使用窗口当前宽度，如果未设置则使用默认宽度 */
+		int w = c->w > 0 ? c->w : default_w;
+		
+		/* 设置窗口位置和大小，尊重当前窗口宽度和考虑间隔 */
+		resizeclient(c, x + offset, m->wy + m->gappx, w, m->wh - (2 * m->gappx));
+		
+		/* 下一个窗口的x坐标就是当前窗口的右边界加上间隔 */
+		x += w + (2 * c->bw) + m->gappx;
 	}
 }
 
@@ -2080,19 +2119,34 @@ tile(Monitor *m)
 	if (n > m->nmaster)
 		mw = m->nmaster ? m->ww * m->mfact : 0;
 	else
-		mw = m->ww - m->gappx;
-	for (i = 0, my = ty = m->gappx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
+		mw = m->ww;
+
+	/* 考虑间隔与边框 */
+	for (i = 0, my = ty = m->gappx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
 		if (i < m->nmaster) {
-			h = (m->wh - my) / (MIN(n, m->nmaster) - i) - m->gappx;
-			resize(c, m->wx + m->gappx, m->wy + my, mw - (2*c->bw) - m->gappx, h - (2*c->bw), 0);
-			if (my + HEIGHT(c) < m->wh)
+			/* 主区域垂直分割 */
+			h = (m->wh - my - m->gappx) / (MIN(n, m->nmaster) - i);
+			resize(c, 
+				m->wx + m->gappx, 
+				m->wy + my, 
+				mw - (2 * c->bw) - (2 * m->gappx), 
+				h - (2 * c->bw) - m->gappx, 
+				0);
+			if (my + HEIGHT(c) + m->gappx < m->wh)
 				my += HEIGHT(c) + m->gappx;
 		} else {
-			h = (m->wh - ty) / (n - i) - m->gappx;
-			resize(c, m->wx + mw + m->gappx, m->wy + ty, m->ww - mw - (2*c->bw) - 2*m->gappx, h - (2*c->bw), 0);
-			if (ty + HEIGHT(c) < m->wh)
+			/* 副区域垂直分割 */
+			h = (m->wh - ty - m->gappx) / (n - i);
+			resize(c, 
+				m->wx + mw + m->gappx, 
+				m->wy + ty, 
+				m->ww - mw - (2 * c->bw) - (2 * m->gappx), 
+				h - (2 * c->bw) - m->gappx, 
+				0);
+			if (ty + HEIGHT(c) + m->gappx < m->wh)
 				ty += HEIGHT(c) + m->gappx;
 		}
+	}
 }
 
 void
@@ -2761,6 +2815,63 @@ zoom(const Arg *arg)
 	if (c == nexttiled(selmon->clients) && !(c = nexttiled(c->next)))
 		return;
 	pop(c);
+}
+
+void
+cyclewindowsize(const Arg *arg)
+{
+	Client *c;
+	Monitor *m = selmon;
+	float widths[] = {0.333, 0.667, 1.0};
+	unsigned int num_widths = sizeof(widths) / sizeof(widths[0]);
+	unsigned int current_width_idx = 0;
+	float new_width;
+	int w;
+
+	if (!m->sel)
+		return;
+
+	c = m->sel;
+	if (c->isfloating || c->isfullscreen)
+		return;
+
+	/* 检查当前布局是否为scroll */
+	if (!m->lt[m->sellt]->arrange || strcmp(m->ltsymbol, "[]]") != 0)
+		return;
+
+	/* 计算窗口当前宽度占屏幕宽度的比例，考虑间隔 */
+	float available_width = m->ww - (2 * m->gappx);  /* 考虑左右间隔 */
+	float current_ratio = (float)c->w / available_width;
+	float min_diff = 1.0;
+
+	/* 找到当前宽度最接近的预设宽度 */
+	for (unsigned int i = 0; i < num_widths; i++) {
+		float diff = fabs(current_ratio - widths[i]);
+		if (diff < min_diff) {
+			min_diff = diff;
+			current_width_idx = i;
+		}
+	}
+
+	/* 根据参数切换到下一个或上一个宽度 */
+	if (arg->i > 0) {
+		/* 增大宽度 */
+		current_width_idx = (current_width_idx + 1) % num_widths;
+	} else {
+		/* 减小宽度 */
+		current_width_idx = (current_width_idx + num_widths - 1) % num_widths;
+	}
+
+	/* 计算新宽度并应用，考虑屏幕可用宽度（减去间隔） */
+	new_width = widths[current_width_idx];
+	w = (int)(available_width * new_width);
+	
+	/* 直接修改客户端结构体的宽度，并更新窗口 */
+	c->w = w;
+	XResizeWindow(dpy, c->win, c->w, c->h);
+	
+	/* 重新调用scroll布局函数来应用更改 */
+	scroll(m);
 }
 
 int

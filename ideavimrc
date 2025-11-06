@@ -48,3 +48,4 @@ noremap tk :action PreviousTab<CR>
 
 noremap gf :action GotoImplementation<CR>
 noremap gs :action ShowUsages<CR>
+set clipboard^=unnamed,unnamedplus

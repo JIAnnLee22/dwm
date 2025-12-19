@@ -102,7 +102,7 @@ static char dmenumon[2] =
 static const char *dmenucmd[] = {
     "dmenu_run", "-m",      dmenumon, "-fn",    dmenufont, "-nb",     col_gray1,
     "-nf",       col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
-static const char *slockcmd[] = {"slock", "&&", "systemctl", "suspend", NULL};
+static const char *slockcmd[] = {"slock", NULL};
 static const char *changebgcmd[] = {"feh", "--randomize", "--bg-fill",
                                     "/home/jiannlee22/Pictures", NULL};
 static const char *screenshotcmd[] = {"flameshot", "gui", NULL};

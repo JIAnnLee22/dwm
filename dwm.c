@@ -935,10 +935,12 @@ enternotify(XEvent *e)
 		return;
 	c = wintoclient(ev->window);
 	m = c ? c->mon : wintomon(ev->window);
-	if (m != selmon) {
-		selmon = m;
-	} else if (!c || c == selmon->sel)
-		return;
+    if (m != selmon) {
+        unfocus(selmon->sel, 1);
+        selmon = m;
+    } else if (!c || c == selmon->sel)
+        return;
+    focus(c);
 }
 
 void

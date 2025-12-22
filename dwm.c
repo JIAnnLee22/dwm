@@ -938,9 +938,9 @@ enternotify(XEvent *e)
     if (m != selmon) {
         unfocus(selmon->sel, 1);
         selmon = m;
+        focus(selmon->sel);
     } else if (!c || c == selmon->sel)
         return;
-    focus(c);
 }
 
 void

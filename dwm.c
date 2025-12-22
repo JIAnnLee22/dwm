@@ -1921,10 +1921,34 @@ setgaps(const Arg *arg)
 void
 setlayout(const Arg *arg)
 {
-	if (!arg || !arg->v || arg->v != selmon->lt[selmon->sellt])
-		selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag] ^= 1;
-	if (arg && arg->v)
-		selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = (Layout *)arg->v;
+	fprintf(stderr, "setlayout called: curtag=%d, sellt=%d\n", 
+		selmon->pertag->curtag, selmon->sellt);
+	
+	if (selmon->pertag->curtag < 1 || selmon->pertag->curtag > LENGTH(tags)) {
+		fprintf(stderr, "setlayout: invalid curtag value: %d\n", selmon->pertag->curtag);
+		return;
+	}
+	
+	if (!arg || !arg->v) {
+		unsigned int new_sellt = selmon->sellt ^ 1;
+		if (selmon->lt[new_sellt] == NULL) {
+			if (selmon->pertag->ltidxs[selmon->pertag->curtag][new_sellt] != NULL) {
+				selmon->lt[new_sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][new_sellt];
+			} else {
+				selmon->lt[new_sellt] = &layouts[1 % LENGTH(layouts)];
+				selmon->pertag->ltidxs[selmon->pertag->curtag][new_sellt] = &layouts[1 % LENGTH(layouts)];
+			}
+		}
+		selmon->sellt = new_sellt;
+		selmon->pertag->sellts[selmon->pertag->curtag] = new_sellt;
+	} else {
+		if (arg->v != selmon->lt[selmon->sellt]) {
+			unsigned int new_sellt = selmon->sellt ^ 1;
+			selmon->lt[new_sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][new_sellt] = (Layout *)arg->v;
+			selmon->sellt = new_sellt;
+			selmon->pertag->sellts[selmon->pertag->curtag] = new_sellt;
+		}
+	}
 	strncpy(selmon->ltsymbol, selmon->lt[selmon->sellt]->symbol, sizeof selmon->ltsymbol);
 	if (selmon->sel)
 		arrange(selmon);

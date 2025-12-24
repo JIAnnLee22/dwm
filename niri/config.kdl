@@ -287,8 +287,13 @@ layout {
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
 spawn-at-startup "waybar"
-spawn-at-startup "fcitx5 -d"
-spawn-at-startup "flameshot gui"
+spawn-at-startup "mako"
+spawn-at-startup "swaybg -i $HOME/Pictures/moon.jpg"
+spawn-at-startup "swayidle" "-w" "timeout" "601" "niri msg action power-off-monitors" "timeout" "600" "swaylock -f" "before-sleep" "swaylock -f"
+
+environment {
+	ELECTRON_OZONE_PLATFORM_HINT "auto"
+}
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
@@ -354,7 +359,7 @@ window-rule {
 // Example: enable rounded corners for all windows.
 // (This example rule is commented out with a "/-" in front.)
 window-rule {
-    geometry-corner-radius 16
+    geometry-corner-radius 9
     clip-to-geometry true
 }
 

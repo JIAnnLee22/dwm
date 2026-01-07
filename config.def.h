@@ -1,6 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
+#include <X11/X.h>
 static const unsigned int borderpx = 3; /* border pixel of windows */
 static const unsigned int gappx = 5;    /* gaps between windows */
 static const unsigned int snap = 32;    /* snap pixel */
@@ -48,11 +49,13 @@ static const Rule rules[] = {
     {"jetbrains-idea-ce", NULL, NULL, 1 << 2, 1, -1, -1, -1, -1, -1, 0},
     {"wechat.exe", NULL, NULL, 1 << 8, 1, -1, -1, -1, -1, -1, 0},
     {"wechat", NULL, NULL, 1 << 8, 1, -1, -1, -1, -1, -1, 0},
+    {"Feishu", NULL, NULL, 1 << 7, 1, -1, -1, -1, -1, -1, 0},
     {"lx-music-desktop", NULL, NULL, 1 << 8, 1, -1, -1, -1, -1, -1, 0},
     {"yesplaymusic", NULL, NULL, 1 << 8, 1, -1, -1, -1, -1, -1, 0},
-    {"feishu", NULL, NULL, 1 << 0, 1, -1, -1, -1, -1, -1, 0},
     {"scrcpy", NULL, NULL, 0, 1, -1, -1, -1, -1, -1, 0},
     {"org.gnome.Nautilus", NULL, NULL, 0, 1, -1, -1, -1, -1, -1, 0},
+    {"pcmanfm", NULL, NULL, 0, 1, -1, -1, -1, -1, -1, 0},
+    {"Pcmanfm", NULL, NULL, 0, 1, -1, -1, -1, -1, -1, 0},
     {"feh", NULL, NULL, 0, 1, -1, -1, -1, -1, -1, 0},
 };
 
@@ -75,7 +78,7 @@ static const Layout layouts[] = {
     {"[M]", monocle},
     {"[]=", tile},   /* first entry is default */
     {"><>", NULL},   /* no layout function means floating behavior */
-    {"[]]", scroll}, /* no layout function means floating behavior */
+    {"[]]", scroll}, /* scrollable layout */
 };
 
 /* key definitions */
@@ -102,15 +105,15 @@ static char dmenumon[2] =
 static const char *dmenucmd[] = {
     "dmenu_run", "-m",      dmenumon, "-fn",    dmenufont, "-nb",     col_gray1,
     "-nf",       col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
-static const char *slockcmd[] = {"slock", NULL};
+static const char *slockcmd[] = { "/home/jiannlee22/.config/dwm/scripts/lock_screen.sh" };
 static const char *changebgcmd[] = {"feh", "--randomize", "--bg-fill",
-                                    "/home/jiannlee22/Pictures", NULL};
+                                    "/home/jiannlee22/Pictures/wallpaper", NULL};
 static const char *screenshotcmd[] = {"flameshot", "gui", NULL};
 static const char *roficmd[] = {"rofi", "-show", "drun", NULL};
 static const char *surfcmd[] = {"tabbed", "-c", "-n", "surf",
                                 "surf",   "-e", NULL};
 static const char *qutebrowsercmd[] = {"qutebrowser", NULL};
-static const char *filescmd[] = {"nautilus", NULL};
+static const char *filescmd[] = {"pcmanfm", NULL};
 static const char *toggletouchpadcmd[] = {"synclient",
                                           "TouchpadOff=$(synclient",
                                           "-l"
@@ -124,7 +127,7 @@ static const char *brightcmd[2][4] = {{"brightnessctl", "s", "2%+", NULL},
 
 static const Key keys[] = {
     /* modifier                     key        function        argument */
-    {MODKEY, XK_p, spawn, {.v = roficmd}},
+    {MODKEY, XK_d, spawn, {.v = roficmd}},
     {MODKEY, XK_e, spawn, {.v = filescmd}},
     {MODKEY | ShiftMask, XK_p, spawn, {.v = screenshotcmd}},
     {MODKEY, XK_Return, spawn, {.v = termcmd}},

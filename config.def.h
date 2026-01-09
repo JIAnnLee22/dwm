@@ -105,9 +105,11 @@ static char dmenumon[2] =
 static const char *dmenucmd[] = {
     "dmenu_run", "-m",      dmenumon, "-fn",    dmenufont, "-nb",     col_gray1,
     "-nf",       col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
-static const char *slockcmd[] = { "/home/jiannlee22/.config/dwm/scripts/lock_screen.sh" };
+static const char *slockcmd[] = {
+    "/home/jiannlee22/.config/dwm/scripts/lock_screen.sh"};
 static const char *changebgcmd[] = {"feh", "--randomize", "--bg-fill",
-                                    "/home/jiannlee22/Pictures/wallpaper", NULL};
+                                    "/home/jiannlee22/Pictures/wallpaper",
+                                    NULL};
 static const char *screenshotcmd[] = {"flameshot", "gui", NULL};
 static const char *roficmd[] = {"rofi", "-show", "drun", NULL};
 static const char *surfcmd[] = {"tabbed", "-c", "-n", "surf",
@@ -164,6 +166,14 @@ static const Key keys[] = {
     {MODKEY | ShiftMask, XK_equal, cyclewindowsize, {.i = +1}},
     {MODKEY | ShiftMask, XK_minus, cyclewindowsize, {.i = -1}},
     {MODKEY, XK_s, togglescratch, {.v = scratchpadcmd}},
+    {MODKEY | Mod1Mask, XK_h, resizekey, {.i = (0 << 8) + 20}},
+    {MODKEY | Mod1Mask, XK_j, resizekey, {.i = (1 << 8) + 20}},
+    {MODKEY | Mod1Mask, XK_k, resizekey, {.i = (2 << 8) + 20}},
+    {MODKEY | Mod1Mask, XK_l, resizekey, {.i = (3 << 8) + 20}},
+    {MODKEY | ControlMask, XK_h, movekey, {.i = (0 << 8) + 20}},
+    {MODKEY | ControlMask, XK_j, movekey, {.i = (1 << 8) + 20}},
+    {MODKEY | ControlMask, XK_k, movekey, {.i = (2 << 8) + 20}},
+    {MODKEY | ControlMask, XK_l, movekey, {.i = (3 << 8) + 20}},
     {0, XF86XK_MonBrightnessUp, spawn, {.v = brightcmd[0]}},
     {0, XF86XK_MonBrightnessDown, spawn, {.v = brightcmd[1]}},
     TAGKEYS(XK_1, 0) TAGKEYS(XK_2, 1) TAGKEYS(XK_3, 2) TAGKEYS(XK_4, 3)

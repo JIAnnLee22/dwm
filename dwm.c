@@ -215,6 +215,7 @@ static void maprequest(XEvent *e);
 static void monocle(Monitor *m);
 static void motionnotify(XEvent *e);
 static void movemouse(const Arg *arg);
+static void movekey(const Arg *arg);
 static Client *nexttiled(Client *c);
 static void pop(Client *c);
 static void propertynotify(XEvent *e);
@@ -225,6 +226,7 @@ static void resize(Client *c, int x, int y, int w, int h, int interact);
 static void resizebarwin(Monitor *m);
 static void resizeclient(Client *c, int x, int y, int w, int h);
 static void resizemouse(const Arg *arg);
+static void resizekey(const Arg *arg);
 static void resizerequest(XEvent *e);
 static void restack(Monitor *m);
 static void run(void);
@@ -1421,6 +1423,48 @@ movemouse(const Arg *arg)
 	}
 }
 
+void
+movekey(const Arg *arg)
+{
+	int nx, ny;
+	Client *c;
+	Monitor *m;
+
+	if (!(c = selmon->sel))
+		return;
+	if (c->isfullscreen) /* no support moving fullscreen windows by mouse */
+		return;
+
+  c->isfloating = 1;
+
+	restack(selmon);
+
+  int direction = arg->i >> 8;
+  int offset = arg->i & 0xFF;
+
+  nx = c->x;
+  ny = c->y;
+
+  switch (direction) {
+    case 0: nx -= offset; break;
+    case 1: ny += offset; break;
+    case 2: ny -= offset; break;
+    case 3: nx += offset; break;
+    default: return;
+  }
+
+  if (!c->isfloating && selmon->lt[selmon->sellt]->arrange
+      && (abs(nx - c->x) > snap || abs(ny - c->y) > snap))
+    togglefloating(NULL);
+  if (!selmon->lt[selmon->sellt]->arrange || c->isfloating)
+    resize(c, nx, ny, c->w, c->h, 1);
+	if ((m = recttomon(c->x, c->y, c->w, c->h)) != selmon) {
+		sendmon(c, m);
+		selmon = m;
+		focus(NULL);
+	}
+}
+
 Client *
 nexttiled(Client *c)
 {
@@ -1601,6 +1645,53 @@ resizemouse(const Arg *arg)
 	XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w + c->bw - 1, c->h + c->bw - 1);
 	XUngrabPointer(dpy, CurrentTime);
 	while (XCheckMaskEvent(dpy, EnterWindowMask, &ev));
+	if ((m = recttomon(c->x, c->y, c->w, c->h)) != selmon) {
+		sendmon(c, m);
+		selmon = m;
+		focus(NULL);
+	}
+}
+
+void
+resizekey(const Arg *arg)
+{
+	int nw, nh;
+	Client *c;
+	Monitor *m;
+
+	if (!(c = selmon->sel))
+		return;
+	if (c->isfullscreen) /* no support resizing fullscreen windows by mouse */
+    return;
+  
+  c->isfloating = 1;
+  restack(selmon);
+
+  int direction = arg->i >> 8;
+  int offset = arg->i & 0xFF;
+
+  nw = c->w;
+  nh = c->h;
+
+  switch (direction) {
+    case 0: nw -= offset; break;
+    case 1: nh += offset; break;
+    case 2: nh -= offset; break;
+    case 3: nw += offset; break;
+    default: return;
+  }
+
+  if (c->mon->wx + nw >= selmon->wx && c->mon->wx + nw <= selmon->wx + selmon->ww
+      && c->mon->wy + nh >= selmon->wy && c->mon->wy + nh <= selmon->wy + selmon->wh)
+  {
+    if (!c->isfloating && selmon->lt[selmon->sellt]->arrange
+        && (abs(nw - c->w) > snap || abs(nh - c->h) > snap))
+      togglefloating(NULL);
+  }
+  if (!selmon->lt[selmon->sellt]->arrange || c->isfloating)
+    resize(c, c->x, c->y, nw, nh, 1);
+
+	restack(selmon);
 	if ((m = recttomon(c->x, c->y, c->w, c->h)) != selmon) {
 		sendmon(c, m);
 		selmon = m;

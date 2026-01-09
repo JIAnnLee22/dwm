@@ -1435,8 +1435,6 @@ movekey(const Arg *arg)
 	if (c->isfullscreen) /* no support moving fullscreen windows by mouse */
 		return;
 
-  c->isfloating = 1;
-
 	restack(selmon);
 
   int direction = arg->i >> 8;
@@ -1453,8 +1451,7 @@ movekey(const Arg *arg)
     default: return;
   }
 
-  if (!c->isfloating && selmon->lt[selmon->sellt]->arrange
-      && (abs(nx - c->x) > snap || abs(ny - c->y) > snap))
+  if (!c->isfloating && selmon->lt[selmon->sellt]->arrange)
     togglefloating(NULL);
   if (!selmon->lt[selmon->sellt]->arrange || c->isfloating)
     resize(c, nx, ny, c->w, c->h, 1);
@@ -1664,7 +1661,6 @@ resizekey(const Arg *arg)
 	if (c->isfullscreen) /* no support resizing fullscreen windows by mouse */
     return;
   
-  c->isfloating = 1;
   restack(selmon);
 
   int direction = arg->i >> 8;
@@ -1684,8 +1680,7 @@ resizekey(const Arg *arg)
   if (c->mon->wx + nw >= selmon->wx && c->mon->wx + nw <= selmon->wx + selmon->ww
       && c->mon->wy + nh >= selmon->wy && c->mon->wy + nh <= selmon->wy + selmon->wh)
   {
-    if (!c->isfloating && selmon->lt[selmon->sellt]->arrange
-        && (abs(nw - c->w) > snap || abs(nh - c->h) > snap))
+    if (!c->isfloating && selmon->lt[selmon->sellt]->arrange)
       togglefloating(NULL);
   }
   if (!selmon->lt[selmon->sellt]->arrange || c->isfloating)

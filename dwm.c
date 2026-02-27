@@ -975,13 +975,13 @@ focus(Client *c)
 		grabbuttons(c, 1);
 		XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
 		setfocus(c);
-		
+
 		/* 检查窗口是否被用户完整看到，如果部分在屏幕外则滚动到可见区域 */
 		if (!c->isfloating && !c->isfullscreen) {
 			Monitor *m = c->mon;
 			/* 检查窗口是否完全在显示器范围内 */
-			if (c->x < m->wx || c->y < m->wy || 
-				c->x + c->w > m->wx + m->ww || 
+			if (c->x < m->wx || c->y < m->wy ||
+				c->x + c->w > m->wx + m->ww ||
 				c->y + c->h > m->wy + m->wh) {
 				scroll(m);
 			}
@@ -1049,8 +1049,8 @@ focusstack(const Arg *arg)
 Atom
 getatomprop(Client *c, Atom prop)
 {
-	int di;
-	unsigned long dl;
+	int format;
+	unsigned long nitems, dl;
 	unsigned char *p = NULL;
 	Atom da, atom = None;
 
@@ -1061,8 +1061,9 @@ getatomprop(Client *c, Atom prop)
 		req = xatom[XembedInfo];
 
 	if (XGetWindowProperty(dpy, c->win, prop, 0L, sizeof atom, False, req,
-		&da, &di, &dl, &dl, &p) == Success && p) {
-		atom = *(Atom *)p;
+		&da, &format, &nitems, &dl, &p) == Success && p) {
+		if (nitems > 0 && format == 32)
+			atom = *(long *)p;
 		if (da == xatom[XembedInfo] && dl == 2)
 			atom = ((Atom *)p)[1];
 		XFree(p);
@@ -1090,10 +1091,10 @@ getstate(Window w)
 	Atom real;
 
 	if (XGetWindowProperty(dpy, w, wmatom[WMState], 0L, 2L, False, wmatom[WMState],
-		&real, &format, &n, &extra, (unsigned char **)&p) != Success)
+		&real, &format, &n, &extra, &p) != Success)
 		return -1;
-	if (n != 0)
-		result = *p;
+	if (n != 0 && format == 32)
+		result = *(long *)p;
 	XFree(p);
 	return result;
 }
@@ -1341,8 +1342,8 @@ monocle(Monitor *m)
 	if (n > 0) /* override layout symbol */
 		snprintf(m->ltsymbol, sizeof m->ltsymbol, "[%d]", n);
 	for (c = nexttiled(m->clients); c; c = nexttiled(c->next))
-		resize(c, m->wx + m->gappx, m->wy + m->gappx, 
-		       m->ww - (2 * m->gappx) - (2 * c->bw), 
+		resize(c, m->wx + m->gappx, m->wy + m->gappx,
+		       m->ww - (2 * m->gappx) - (2 * c->bw),
 		       m->wh - (2 * m->gappx) - (2 * c->bw), 0);
 }
 
@@ -1660,7 +1661,7 @@ resizekey(const Arg *arg)
 		return;
 	if (c->isfullscreen) /* no support resizing fullscreen windows by mouse */
     return;
-  
+
   restack(selmon);
 
   int direction = arg->i >> 8;
@@ -1884,10 +1885,10 @@ scroll(Monitor *m)
 	for (c = nexttiled(m->clients); c; c = nexttiled(c->next)) {
 		/* 使用窗口当前宽度，如果未设置则使用默认宽度 */
 		int w = c->w > 0 ? c->w : default_w;
-		
+
 		/* 设置窗口位置和大小，尊重当前窗口宽度和考虑间隔 */
 		resizeclient(c, x + offset, m->wy + m->gappx, w, m->wh - (2 * m->gappx));
-		
+
 		/* 下一个窗口的x坐标就是当前窗口的右边界加上间隔 */
 		x += w + (2 * c->bw) + m->gappx;
 	}
@@ -1957,12 +1958,10 @@ sendevent(Window w, Atom proto, int mask, long d0, long d1, long d2, long d3, lo
 void
 setfocus(Client *c)
 {
-	if (!c->neverfocus) {
+	if (!c->neverfocus)
 		XSetInputFocus(dpy, c->win, RevertToPointerRoot, CurrentTime);
-		XChangeProperty(dpy, root, netatom[NetActiveWindow],
-			XA_WINDOW, 32, PropModeReplace,
-			(unsigned char *) &(c->win), 1);
-	}
+	XChangeProperty(dpy, root, netatom[NetActiveWindow], XA_WINDOW, 32,
+		PropModeReplace, (unsigned char *)&c->win, 1);
 	sendevent(c->win, wmatom[WMTakeFocus], NoEventMask, wmatom[WMTakeFocus], CurrentTime, 0, 0, 0);
 }
 
@@ -2007,14 +2006,14 @@ setgaps(const Arg *arg)
 void
 setlayout(const Arg *arg)
 {
-	fprintf(stderr, "setlayout called: curtag=%d, sellt=%d\n", 
+	fprintf(stderr, "setlayout called: curtag=%d, sellt=%d\n",
 		selmon->pertag->curtag, selmon->sellt);
-	
+
 	if (selmon->pertag->curtag < 1 || selmon->pertag->curtag > LENGTH(tags)) {
 		fprintf(stderr, "setlayout: invalid curtag value: %d\n", selmon->pertag->curtag);
 		return;
 	}
-	
+
 	if (!arg || !arg->v) {
 		unsigned int new_sellt = selmon->sellt ^ 1;
 		if (selmon->lt[new_sellt] == NULL) {
@@ -2237,22 +2236,22 @@ tile(Monitor *m)
 		if (i < m->nmaster) {
 			/* 主区域垂直分割 */
 			h = (m->wh - my - m->gappx) / (MIN(n, m->nmaster) - i);
-			resize(c, 
-				m->wx + m->gappx, 
-				m->wy + my, 
-				mw - (2 * c->bw) - (2 * m->gappx), 
-				h - (2 * c->bw) - m->gappx, 
+			resize(c,
+				m->wx + m->gappx,
+				m->wy + my,
+				mw - (2 * c->bw) - (2 * m->gappx),
+				h - (2 * c->bw) - m->gappx,
 				0);
 			if (my + HEIGHT(c) + m->gappx < m->wh)
 				my += HEIGHT(c) + m->gappx;
 		} else {
 			/* 副区域垂直分割 */
 			h = (m->wh - ty - m->gappx) / (n - i);
-			resize(c, 
-				m->wx + mw + m->gappx, 
-				m->wy + ty, 
-				m->ww - mw - (2 * c->bw) - (2 * m->gappx), 
-				h - (2 * c->bw) - m->gappx, 
+			resize(c,
+				m->wx + mw + m->gappx,
+				m->wy + ty,
+				m->ww - mw - (2 * c->bw) - (2 * m->gappx),
+				h - (2 * c->bw) - m->gappx,
 				0);
 			if (ty + HEIGHT(c) + m->gappx < m->wh)
 				ty += HEIGHT(c) + m->gappx;
@@ -2976,11 +2975,11 @@ cyclewindowsize(const Arg *arg)
 	/* 计算新宽度并应用，考虑屏幕可用宽度（减去间隔） */
 	new_width = widths[current_width_idx];
 	w = (int)(available_width * new_width);
-	
+
 	/* 直接修改客户端结构体的宽度，并更新窗口 */
 	c->w = w;
 	XResizeWindow(dpy, c->win, c->w, c->h);
-	
+
 	/* 重新调用scroll布局函数来应用更改 */
 	scroll(m);
 }

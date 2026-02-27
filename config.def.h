@@ -43,14 +43,13 @@ static const Rule rules[] = {
     /* class      						instance title
        tags mask 		isfloating   monitor    float x,y,w,h
        floatborderpx*/
-    {"google-chrome", "google-chrome", "google-chrome", 1 << 1, 0, -1, -1, -1, -1, -1, 0},
-    {"Google-chrome", "Google-chrome", "Google-chrome", 1 << 1, 0, -1, -1, -1, -1, -1, 0},
-    {"jetbrains-studio", "jetbrains-studio", "jetbrains-studio", 1 << 2, 1, -1, -1, -1, -1, -1, 0},
-    {"jetbrains-idea-ce", "jetbrains-idea-ce", "jetbrains-idea-ce", 1 << 2, 1, -1, -1, -1, -1, -1, 0},
-    {"wechat.exe", "wechat.exe", "wechat.exe", 1 << 8, 1, -1, -1, -1, -1, -1, 0},
-    {"wechat", "wechat", "wechat", 1 << 8, 1, -1, -1, -1, -1, -1, 0},
-    {"Feishu", "Feishu", "Feishu", 1 << 7, 1, -1, -1, -1, -1, -1, 0},
-    {"feishu", "feishu", "feishu", 1 << 7, 1, -1, -1, -1, -1, -1, 0},
+    {"google-chrome", NULL, NULL, 1 << 1, 0, -1, -1, -1, -1, -1, 0},
+    {"Google-chrome", NULL, NULL, 1 << 1, 0, -1, -1, -1, -1, -1, 0},
+    {"jetbrains-studio", NULL, NULL, 1 << 2, 1, -1, -1, -1, -1, -1, 0},
+    {"jetbrains-idea-ce", NULL, NULL, 1 << 2, 1, -1, -1, -1, -1, -1, 0},
+    {"wechat.exe", NULL, NULL, 1 << 8, 1, -1, -1, -1, -1, -1, 0},
+    {"wechat", NULL, NULL, 1 << 8, 1, -1, -1, -1, -1, -1, 0},
+    {"Feishu", NULL, NULL, 1 << 7, 1, -1, -1, -1, -1, -1, 0},
     {"lx-music-desktop", NULL, NULL, 1 << 8, 1, -1, -1, -1, -1, -1, 0},
     {"yesplaymusic", NULL, NULL, 1 << 8, 1, -1, -1, -1, -1, -1, 0},
     {"scrcpy", NULL, NULL, 0, 1, -1, -1, -1, -1, -1, 0},

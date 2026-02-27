@@ -50,6 +50,7 @@ static const Rule rules[] = {
     {"wechat.exe", NULL, NULL, 1 << 8, 1, -1, -1, -1, -1, -1, 0},
     {"wechat", NULL, NULL, 1 << 8, 1, -1, -1, -1, -1, -1, 0},
     {"Feishu", NULL, NULL, 1 << 7, 1, -1, -1, -1, -1, -1, 0},
+    {"bytedance-feishu", NULL, NULL, 1 << 7, 1, -1, -1, -1, -1, -1, 0},
     {"lx-music-desktop", NULL, NULL, 1 << 8, 1, -1, -1, -1, -1, -1, 0},
     {"yesplaymusic", NULL, NULL, 1 << 8, 1, -1, -1, -1, -1, -1, 0},
     {"scrcpy", NULL, NULL, 0, 1, -1, -1, -1, -1, -1, 0},

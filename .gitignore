@@ -1,0 +1,6 @@
+/dwm
+/*.o
+/config.h
+/dwm-*.tar.gz
+/result
+/result-*

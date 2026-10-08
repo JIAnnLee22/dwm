@@ -106,25 +106,22 @@ static char dmenumon[2] =
 static const char *dmenucmd[] = {
     "dmenu_run", "-m",      dmenumon, "-fn",    dmenufont, "-nb",     col_gray1,
     "-nf",       col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
-static const char *slockcmd[] = {
-    "/home/jiannlee22/.config/dwm/scripts/lock_screen.sh"};
-static const char *changebgcmd[] = {"feh", "--randomize", "--bg-fill",
-                                    "/home/jiannlee22/Pictures/wallpaper",
-                                    NULL};
+/* NixOS provides the privileged slock executable through /run/wrappers/bin. */
+static const char *slockcmd[] = {"slock", NULL};
+static const char *changebgcmd[] = {
+    "/bin/sh", "-c",
+    "exec feh --randomize --bg-fill \"${DWM_WALLPAPER_DIR:-$HOME/Pictures/wallpaper}\"",
+    NULL};
 static const char *screenshotcmd[] = {"flameshot", "gui", NULL};
 static const char *roficmd[] = {"rofi", "-show", "drun", NULL};
 static const char *surfcmd[] = {"tabbed", "-c", "-n", "surf",
                                 "surf",   "-e", NULL};
 static const char *qutebrowsercmd[] = {"qutebrowser", NULL};
 static const char *filescmd[] = {"pcmanfm", NULL};
-static const char *toggletouchpadcmd[] = {"synclient",
-                                          "TouchpadOff=$(synclient",
-                                          "-l"
-                                          "|",
-                                          "grep",
-                                          "-c",
-                                          "'TouchpadOff.*=.*0')",
-                                          NULL};
+static const char *toggletouchpadcmd[] = {
+    "/bin/sh", "-c",
+    "exec synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')",
+    NULL};
 static const char *brightcmd[2][4] = {{"brightnessctl", "s", "2%+", NULL},
                                       {"brightnessctl", "s", "2%-", NULL}};
 

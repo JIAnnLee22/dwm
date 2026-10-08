@@ -46,3 +46,9 @@ Configuration
 -------------
 The configuration of dwm is done by creating a custom config.h
 and (re)compiling the source code.
+
+Nix / NixOS
+-----------
+The flake provides packages, an overlay, and a NixOS module. See docs/nixos.md
+for declarative config.h overrides, greetd/startx setup, privileged slock
+integration, and XDG-aware autostart behavior.
